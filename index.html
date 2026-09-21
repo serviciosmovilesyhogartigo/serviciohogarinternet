@@ -64,16 +64,13 @@
         <div class="flex items-center gap-2.5">
           <div class="bg-gradient-to-r from-tigo-yellow via-amber-400 to-tigo-cyan p-[2px] rounded-2xl shadow-glow-yellow">
             <div class="bg-tigo-navy px-3 py-1.5 rounded-[14px] flex items-center gap-2">
-              <!-- Icono Wi-Fi SVG -->
               <svg class="w-5 h-5 text-tigo-yellow" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
                 <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
                 <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
                 <line x1="12" y1="20" x2="12.01" y2="20"></line>
               </svg>
-              <!-- Separador sutil -->
               <span class="h-4 w-[1px] bg-white/20"></span>
-              <!-- Insignia 5G -->
               <div class="flex items-center">
                 <span class="text-sm font-black tracking-tight text-white">5G</span>
                 <span class="w-1.5 h-1.5 rounded-full bg-tigo-cyan ml-1 animate-pulse"></span>
@@ -103,19 +100,16 @@
   </nav>
 
   <header class="relative bg-gradient-to-b from-tigo-navy via-[#002758] to-tigo-dark text-white pt-14 pb-24 px-4 sm:px-6 lg:px-8 text-center overflow-hidden">
-    <!-- Grid & Radial Glow Effects -->
     <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#00C2DE_1px,transparent_1px)] [background-size:28px_28px]"></div>
     <div class="absolute -top-32 -left-20 w-80 h-80 bg-tigo-bright/25 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute top-1/3 -right-20 w-96 h-96 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative max-w-4xl mx-auto z-10">
-      <!-- Badge de propuesta -->
       <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-tigo-yellow text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-wider mb-6">
         <span class="w-2 h-2 rounded-full bg-tigo-yellow animate-ping"></span>
         Red de Internet de Alta Velocidad
       </div>
 
-      <!-- Encabezado Directo Requerido -->
       <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">
         Conexión sin caídas y entretenimiento total: <span class="text-transparent bg-clip-text bg-gradient-to-r from-tigo-yellow via-amber-200 to-white">pásate al mejor internet y televisión de Tigo</span>
       </h1>
@@ -124,7 +118,6 @@
         Velocidad garantizada incluso en horas pico, paquetes con canales HD reales y los mejores servicios de streaming incluidos en tu misma factura.
       </p>
 
-      <!-- Botones de Acción Rápida -->
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="#planes" class="w-full sm:w-auto bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy font-extrabold px-8 py-4 rounded-full shadow-glow-yellow transition-all duration-200 hover:-translate-y-0.5 text-center">
           Ver Paquetes y Precios Exactos
@@ -136,7 +129,6 @@
         </a>
       </div>
 
-      <!-- Quick Trust Indicators -->
       <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div class="p-2">
           <p class="text-xl sm:text-2xl font-black text-tigo-yellow">100%</p>
@@ -160,7 +152,6 @@
 
   <section id="cobertura" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-16 relative z-20 w-full">
     <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-tigo-blue/20">
-      <!-- Banner de Enlace al Validador Oficial Externo -->
       <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50 via-cyan-50 to-amber-50 border border-blue-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-tigo-blue text-white flex items-center justify-center shrink-0 shadow-sm">
@@ -223,7 +214,6 @@
         </button>
       </form>
 
-      <!-- Quick suggestions chips -->
       <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
         <span class="font-bold text-slate-600">Zonas frecuentes:</span>
         <button type="button" onclick="probarZona('Bello Horizonte, Managua')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Bello Horizonte</button>
@@ -233,7 +223,6 @@
         <button type="button" onclick="probarZona('Monimbó, Masaya')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Masaya</button>
       </div>
 
-      <!-- Result Feedback Box -->
       <div id="resultado-cobertura" class="hidden mt-5 p-5 rounded-2xl border transition-all duration-300"></div>
     </div>
   </section>
@@ -250,7 +239,6 @@
         Velocidad garantizada de subida y bajada, canales en alta definición y precios completos con IVA incluido. Elige la modalidad que necesitas:
       </p>
 
-      <!-- Selector de Pestañas de Categoría -->
       <div class="mt-8 inline-flex p-1.5 bg-slate-200/80 rounded-2xl gap-1 max-w-full overflow-x-auto shadow-inner">
         <button onclick="cambiarCategoria('internet')" id="tab-btn-internet" class="tab-pill active px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap bg-tigo-blue text-white shadow">
           Internet Solo
@@ -287,7 +275,6 @@
             <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
           </div>
 
-          <!-- Especificaciones Técnicas Claras -->
           <div class="mt-4 space-y-2.5 text-sm text-slate-700">
             <div class="flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
@@ -303,7 +290,6 @@
             </div>
           </div>
 
-          <!-- Promoción e Incentivos -->
           <div class="mt-6 pt-4 border-t border-slate-100">
             <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
             <div class="flex gap-2">
@@ -681,7 +667,7 @@
             <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio incluye IVA</p>
           </div>
 
-          <!-- Botón WhatsApp Directo de la captura -->
+          <!-- Botón WhatsApp Directo -->
           <a href="https://wa.me/?text=Hola%2C%20quiero%20solicitar%20el%20plan%20Tigo%20Full%20Hogar%20200%20Mbps%20(C$1%2C210/mes)" target="_blank" class="mt-4 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-emerald-600 text-white font-black text-xs py-2.5 px-4 rounded-full transition shadow-sm">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Solicitar Por WhatsApp
@@ -900,7 +886,6 @@
   </section>
 
   <section id="celular-gratis" class="py-16 bg-gradient-to-b from-slate-900 via-tigo-navy to-slate-900 text-white relative overflow-hidden border-b border-white/10">
-    <!-- Background Glows -->
     <div class="absolute -top-24 left-1/4 w-96 h-96 bg-tigo-cyan/15 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute -bottom-24 right-1/4 w-96 h-96 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -918,7 +903,6 @@
         </p>
       </div>
 
-      <!-- Beneficios Destacados en Cuadrícula -->
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         
         <!-- Beneficio 1 -->
@@ -1021,7 +1005,6 @@
 
   <section id="contacto" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
     <div class="bg-gradient-to-br from-tigo-navy via-[#002758] to-tigo-dark rounded-3xl p-8 sm:p-12 text-white shadow-2xl border-2 border-tigo-yellow/30 relative overflow-hidden">
-      <!-- Glow background -->
       <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="relative z-10 max-w-2xl mx-auto text-center mb-8">
@@ -1036,7 +1019,7 @@
         </p>
       </div>
 
-      <!-- Formulario Ultracorto Solicitado: Nombre, Teléfono, Ubicación -->
+      <!-- Formulario Ultracorto: Nombre, Teléfono, Ubicación -->
       <form id="lead-form-ultracorto" onsubmit="enviarLeadCorto(event)" class="relative z-10 max-w-xl mx-auto space-y-4">
         
         <!-- Campo 1: Nombre -->
@@ -1245,10 +1228,8 @@
   <footer class="bg-tigo-navy text-slate-400 py-12 px-4 sm:px-6 lg:px-8 text-sm mt-auto border-t border-white/10">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
       <div class="flex items-center gap-3 justify-center md:justify-start">
-        <!-- Logo Footer: Conexión 5G y Wi-Fi -->
         <div class="bg-gradient-to-r from-tigo-yellow via-amber-400 to-tigo-cyan p-[2px] rounded-xl shadow-sm">
           <div class="bg-tigo-navy px-2.5 py-1 rounded-[10px] flex items-center gap-1.5">
-            <!-- Icono Wi-Fi SVG -->
             <svg class="w-4 h-4 text-tigo-yellow" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
               <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
               <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
@@ -1297,21 +1278,19 @@
   <!-- Toast Notification Container -->
   <div id="toast-wrapper" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
+  <!-- Botón Flotante Redondo Animado -->
   <aside aria-label="Acceso rápido a promoción celular gratis" class="fixed bottom-6 left-4 sm:left-6 z-40 animate-float-vertical">
     <a 
       href="#celular-gratis" 
       class="group relative flex flex-col items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-tigo-yellow via-amber-400 to-[#FF9E00] text-tigo-navy shadow-2xl hover:shadow-glow-yellow border-4 border-white text-center p-2 transition-transform duration-300 hover:scale-110 active:scale-95 select-none"
       title="Obtén tu plan Celular Gratis"
     >
-      <!-- Radar pulse ring -->
       <span class="absolute -inset-1 rounded-full bg-tigo-yellow opacity-40 animate-ping pointer-events-none"></span>
 
-      <!-- Insignia superior -->
       <span class="absolute -top-1 bg-tigo-navy text-tigo-yellow text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-md border border-tigo-yellow tracking-wider">
         ¡GRATIS!
       </span>
 
-      <!-- Contenido dentro del círculo -->
       <div class="flex flex-col items-center justify-center leading-tight">
         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-tigo-navy mb-0.5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -1466,7 +1445,6 @@
           </div>
         `;
         
-        // Autocompletar la ubicación en el formulario ultracorto
         const ubicacionLead = document.getElementById('lead-ubicacion');
         if (ubicacionLead) ubicacionLead.value = barrio;
 
@@ -1487,9 +1465,9 @@
     }
 
     // URL de la Web App de Google Apps Script vinculada a la hoja "leads Home"
-    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby9of3SJSn_pKQ8WymgxlRqSSoMrYM2qOizjvphsfAoWydHTJ85gtmQN8WhEd17uLAe/exec";
+    const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzHtnPAZl5dk6Wzh0jfPcVAw8yxgb9M1S050676_W0TzBzgwY_i6LVXeiTl15knclEA/exec";
 
-    // Envío del Formulario Ultracorto conectado a Google Sheets mediante URL parameters nativos
+    // Envío del Formulario Ultracorto conectado a Google Sheets con codificación estricta de parámetros
     async function enviarLeadCorto(e) {
       e.preventDefault();
 
@@ -1509,16 +1487,19 @@
       btnSpinner.classList.remove('hidden');
       btnIcon.classList.add('hidden');
 
-      // Se envían los datos por GET con parámetros de URL directos.
-      const urlEnvio = new URL(GOOGLE_SHEETS_WEBAPP_URL);
-      urlEnvio.searchParams.append("nombre", nombre);
-      urlEnvio.searchParams.append("telefono", telefono);
-      urlEnvio.searchParams.append("ubicacion", ubicacion);
-      urlEnvio.searchParams.append("plan", plan);
-      urlEnvio.searchParams.append("_t", new Date().getTime());
+      // Codificación directa en cadena de consulta (Query String)
+      const params = [
+        'nombre=' + encodeURIComponent(nombre),
+        'telefono=' + encodeURIComponent(telefono),
+        'ubicacion=' + encodeURIComponent(ubicacion),
+        'plan=' + encodeURIComponent(plan),
+        '_t=' + Date.now()
+      ].join('&');
+
+      const urlFinal = GOOGLE_SHEETS_WEBAPP_URL + (GOOGLE_SHEETS_WEBAPP_URL.includes('?') ? '&' : '?') + params;
 
       try {
-        await fetch(urlEnvio.toString(), {
+        await fetch(urlFinal, {
           method: 'GET',
           mode: 'no-cors'
         });
@@ -1531,7 +1512,6 @@
         mostrarToast(`¡Gracias ${nombre}! Recibimos tu solicitud. Te llamaremos al ${telefono} en breve.`, 'info');
         document.getElementById('lead-form-ultracorto').reset();
       } finally {
-        // Restaurar estado del botón
         btnSubmit.disabled = false;
         btnText.textContent = "¡Pásate a Tigo Hoy! Llamarme Gratis";
         btnSpinner.classList.add('hidden');
@@ -1539,7 +1519,7 @@
       }
     }
 
-    // Sistema de notificaciones Toast visuales (sin alerts)
+    // Sistema de notificaciones Toast visuales
     function mostrarToast(mensaje, tipo = 'info') {
       const container = document.getElementById('toast-wrapper');
       const toast = document.createElement('div');
