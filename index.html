@@ -18,21 +18,26 @@
             sans: ['Inter', 'sans-serif'],
           },
           colors: {
-            brand: {
+            tigo: {
+              navy: '#001E50',
               blue: '#00377B',
-              sky: '#00A3E0',
-              navy: '#001E45',
-              dark: '#0A1118',
-              accent: '#FF6B4A',
-              yellow: '#FFC72C',
-              softBg: '#F3F6F9',
-              green: '#25D366'
+              bright: '#005CE6',
+              yellow: '#FFC200',
+              yellowHover: '#E5AF00',
+              cyan: '#00C2DE',
+              dark: '#0A1325',
+              softBg: '#F3F6FA',
+              success: '#00A859'
             }
+          },
+          boxShadow: {
+            'glow-yellow': '0 0 25px -5px rgba(255, 194, 0, 0.4)',
+            'glow-blue': '0 0 25px -5px rgba(0, 92, 230, 0.3)'
           },
           keyframes: {
             floatVertical: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-12px)' },
+              '50%': { transform: 'translateY(-14px)' },
             }
           },
           animation: {
@@ -43,761 +48,1449 @@
     }
   </script>
 </head>
-<body class="bg-brand-softBg text-slate-800 antialiased selection:bg-brand-sky selection:text-white">
+<body class="bg-tigo-softBg font-sans text-slate-800 antialiased selection:bg-tigo-yellow selection:text-tigo-navy min-h-screen flex flex-col">
 
-  <!-- Iframe oculto para capturar respuesta del servidor sin redirecciones -->
+  <!-- Iframe oculto para procesar el envío a Google Sheets sin recargar la página -->
   <iframe name="hidden_submit_iframe" id="hidden_submit_iframe" style="display:none;"></iframe>
 
   <!-- Botón Flotante Redondo Animado (Plan Celular Incluido / ¡Sin recargas!) -->
-  <aside aria-label="Acceso rápido a promoción celular incluido" class="fixed bottom-6 left-4 sm:left-6 z-40">
+  <aside aria-label="Acceso rápido a promoción celular incluido" class="fixed bottom-6 left-4 sm:left-6 z-40 animate-float-vertical">
     <a 
       href="#celular-gratis" 
-      class="animate-float-vertical group relative flex flex-col items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-300 text-brand-dark shadow-2xl hover:scale-105 transition-transform duration-200 border-4 border-white text-center p-2 select-none"
+      class="group relative flex flex-col items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-tigo-yellow via-amber-400 to-[#FF9E00] text-tigo-navy shadow-2xl hover:shadow-glow-yellow border-4 border-white text-center p-2 transition-transform duration-300 hover:scale-110 active:scale-95 select-none"
       title="Obtén tu plan Celular Incluido"
     >
-      <span class="absolute -inset-1 rounded-full border border-amber-300 animate-ping opacity-30 pointer-events-none"></span>
+      <span class="absolute -inset-1 rounded-full bg-tigo-yellow opacity-40 animate-ping pointer-events-none"></span>
 
       <!-- Insignia superior -->
-      <span class="absolute -top-2 bg-brand-navy text-amber-300 text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-md border border-amber-300/40 tracking-wider whitespace-nowrap">
+      <span class="absolute -top-1 bg-tigo-navy text-tigo-yellow text-[8px] sm:text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-md border border-tigo-yellow tracking-wider whitespace-nowrap">
         ¡Sin recargas!
       </span>
 
       <!-- Contenido dentro del círculo -->
       <div class="flex flex-col items-center justify-center leading-tight">
-        <svg class="w-5 h-5 text-brand-navy mb-0.5 group-hover:rotate-12 transition-transform duration-200" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z"/>
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-tigo-navy mb-0.5 group-hover:rotate-12 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
         </svg>
-        <span class="text-[10px] sm:text-[11px] font-black uppercase tracking-tight leading-tight text-brand-navy">
+        <span class="text-[10px] sm:text-[11px] font-black uppercase tracking-tight leading-3 text-tigo-navy">
           Plan Celular<br>
-          <span class="text-xs font-black underline decoration-2 text-brand-blue">Incluido</span>
+          <span class="text-xs sm:text-sm font-black underline decoration-2 text-tigo-blue">Incluido</span>
         </span>
       </div>
     </a>
   </aside>
 
-  <!-- Botón Flotante Permanente de WhatsApp (Esquina inferior derecha) -->
-  <aside aria-label="Contacto directo por WhatsApp" class="fixed bottom-6 right-4 sm:right-6 z-40">
+  <!-- Botón Flotante de WhatsApp Directo -->
+  <aside aria-label="Contacto por WhatsApp" class="fixed bottom-6 right-4 sm:right-6 z-40">
     <a 
       href="https://wa.me/50589881501?text=Hola%2C%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20planes%20de%20internet%20y%20televisi%C3%B3n%20Tigo" 
       target="_blank" 
       rel="noopener noreferrer"
-      class="flex items-center gap-2.5 bg-[#25D366] hover:bg-emerald-600 text-white font-extrabold text-sm px-4 py-3 rounded-full shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 group border-2 border-white"
+      class="flex items-center gap-2.5 bg-[#25D366] hover:bg-emerald-600 text-white font-black text-xs sm:text-sm px-4 py-3 rounded-full shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 border-2 border-white"
       title="Hablar por WhatsApp con un asesor"
     >
-      <svg class="w-6 h-6 fill-current group-hover:rotate-12 transition-transform duration-200" viewBox="0 0 24 24">
+      <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
       </svg>
-      <span class="hidden sm:inline-block tracking-tight">¿Dudas? Chatea aquí</span>
+      <span class="hidden sm:inline-block">¿Dudas? Chatea aquí</span>
     </a>
   </aside>
 
   <!-- Barra de navegación -->
-  <nav class="bg-brand-navy/95 backdrop-blur text-white py-3.5 px-4 sm:px-6 sticky top-0 z-40 shadow-lg border-b border-brand-blue/30">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
+  <nav class="bg-tigo-navy text-white sticky top-0 z-50 shadow-lg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between py-3.5">
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full border border-white/20">
-          <svg class="w-5 h-5 text-brand-sky" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.5c3.74 0 7.15 1.49 9.68 3.91L12 19.34 2.32 11.41C4.85 8.99 8.26 7.5 12 7.5z"/>
-          </svg>
-          <span class="font-extrabold text-sm tracking-wider text-amber-300">5G</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <!-- Logo 5G y Wi-Fi -->
+        <div class="flex items-center gap-2.5">
+          <div class="bg-gradient-to-r from-tigo-yellow via-amber-400 to-tigo-cyan p-[2px] rounded-2xl shadow-glow-yellow">
+            <div class="bg-tigo-navy px-3 py-1.5 rounded-[14px] flex items-center gap-2">
+              <svg class="w-5 h-5 text-tigo-yellow" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+              </svg>
+              <span class="h-4 w-[1px] bg-white/20"></span>
+              <div class="flex items-center">
+                <span class="text-sm font-black tracking-tight text-white">5G</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-tigo-cyan ml-1 animate-pulse"></span>
+              </div>
+            </div>
+          </div>
+          <span class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-200 border-l border-white/20 pl-3">
+            Distribuidor Autorizado de Tigo
+          </span>
         </div>
-        <span class="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-slate-200 border-l border-white/20 pl-3">
-          Distribuidor Autorizado de Tigo
-        </span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-200">
+        <a href="#cobertura" class="hover:text-tigo-yellow transition">Verificar Cobertura</a>
+        <a href="#planes" class="hover:text-tigo-yellow transition">Planes Transparentes</a>
+        <a href="#incentivos" class="hover:text-tigo-yellow transition">Beneficios Streaming</a>
+        <a href="#opiniones" class="hover:text-tigo-yellow transition">Opiniones & Garantía</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="#cobertura" class="hidden md:inline-flex text-xs font-semibold text-sky-200 hover:text-white transition">
-          Ver Cobertura
-        </a>
-        <a href="#contacto" class="bg-brand-sky hover:bg-sky-400 text-brand-navy font-black text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full transition shadow-md">
-          Solicitar ahora
+        <a href="#contacto" class="bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-full transition shadow-glow-yellow hover:scale-105 active:scale-95 flex items-center gap-2">
+          <span>Solicitar Ahora</span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- 1. Encabezado directo y propuesta de valor -->
-  <header class="bg-gradient-to-b from-brand-navy via-brand-blue to-slate-900 text-white pt-14 pb-24 px-6 text-center relative overflow-hidden">
-    <div class="max-w-4xl mx-auto relative z-10">
-      <div class="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-4 py-1 rounded-full mb-4">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-        Velocidad garantizada y disponibilidad 99.8%
+  <!-- Encabezado Directo y Propuesta de Valor -->
+  <header class="relative bg-gradient-to-b from-tigo-navy via-[#002758] to-tigo-dark text-white pt-14 pb-24 px-4 sm:px-6 lg:px-8 text-center overflow-hidden">
+    <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#00C2DE_1px,transparent_1px)] [background-size:28px_28px]"></div>
+    <div class="absolute -top-32 -left-20 w-80 h-80 bg-tigo-bright/25 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 -right-20 w-96 h-96 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto z-10">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-tigo-yellow text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-wider mb-6">
+        <span class="w-2 h-2 rounded-full bg-tigo-yellow animate-ping"></span>
+        Red de Internet de Alta Velocidad
       </div>
 
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
-        Conexión sin caídas y entretenimiento total: <br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-sky-300 to-white">
-          pásate al mejor internet y televisión de tigo
-        </span>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">
+        Conexión sin caídas y entretenimiento total: <span class="text-transparent bg-clip-text bg-gradient-to-r from-tigo-yellow via-amber-200 to-white">pásate al mejor internet y televisión de tigo</span>
       </h1>
 
-      <p class="mt-5 text-slate-200 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
-        Velocidad estable en horas pico, televisión digital en alta definición y acceso a tus plataformas favoritas en un solo paquete.
+      <p class="mt-6 text-slate-300 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
+        Velocidad garantizada incluso en horas pico, paquetes con canales HD reales y los mejores servicios de streaming incluidos en tu misma factura.
       </p>
 
-      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="#planes" class="w-full sm:w-auto bg-amber-400 hover:bg-amber-300 text-brand-dark font-black px-8 py-3.5 rounded-full shadow-lg transition transform hover:-translate-y-0.5">
-          Explorar Paquetes Disponibles
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#planes" class="w-full sm:w-auto bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy font-extrabold px-8 py-4 rounded-full shadow-glow-yellow transition-all duration-200 hover:-translate-y-0.5 text-center">
+          Ver Paquetes y Precios Exactos
         </a>
-        <a href="https://script.google.com/macros/s/AKfycbz-1sH93YYBC9reMbxhbyQcCKb82cJzE2OqDIYEsAsg0m9V-NJvEyFy1ugPtNJDoxs/exec" 
-           target="_blank" rel="noopener noreferrer"
-           class="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3.5 rounded-full backdrop-blur transition flex items-center justify-center gap-2">
-          <span>Consultar Factibilidad de Cobertura</span>
-          <span class="text-xs bg-brand-sky text-brand-navy px-2 py-0.5 rounded-full font-bold">Oficial ↗</span>
+        <a href="https://script.google.com/macros/s/AKfycbz-1sH93YYBC9reMbxhbyQcCKb82cJzE2OqDIYEsAsg0m9V-NJvEyFy1ugPtNJDoxs/exec" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold px-7 py-4 rounded-full backdrop-blur-sm transition text-center flex items-center justify-center gap-2 group">
+          <svg class="w-5 h-5 text-tigo-cyan group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Validar Cobertura en Línea</span>
+          <span class="text-xs bg-tigo-cyan/20 text-tigo-cyan px-2 py-0.5 rounded-full font-bold ml-1">Oficial ↗</span>
         </a>
       </div>
 
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-left text-xs sm:text-sm border-t border-white/10 pt-6">
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="text-amber-300 font-bold">✓</span> Precios exactos con IVA
+      <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="p-2">
+          <p class="text-xl sm:text-2xl font-black text-tigo-yellow">100%</p>
+          <p class="text-xs text-slate-300 font-medium">Precios con IVA incluido</p>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="text-amber-300 font-bold">✓</span> Sin sorpresas en factura
+        <div class="p-2">
+          <p class="text-xl sm:text-2xl font-black text-tigo-cyan">&lt; 72 hrs</p>
+          <p class="text-xs text-slate-300 font-medium">Instalación garantizada</p>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="text-amber-300 font-bold">✓</span> Instalación &lt; 72 hrs
+        <div class="p-2">
+          <p class="text-xl sm:text-2xl font-black text-tigo-yellow">99.8%</p>
+          <p class="text-xs text-slate-300 font-medium">Estabilidad en hora pico</p>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="text-amber-300 font-bold">✓</span> Soporte prioritario
+        <div class="p-2">
+          <p class="text-xl sm:text-2xl font-black text-tigo-cyan">HD Real</p>
+          <p class="text-xs text-slate-300 font-medium">Hasta 175 canales de TV</p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- 2. Comparativa transparente de planes -->
-  <section id="planes" class="max-w-6xl mx-auto px-4 sm:px-6 -mt-12 mb-20 relative z-20">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-2 sm:p-3 mb-8 max-w-3xl mx-auto">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-1.5" role="tablist">
-        <button onclick="switchTab('tab-internet')" id="btn-internet" class="tab-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-brand-navy bg-sky-100 transition">
-          Internet
+  <!-- Verificador Interactivo de Cobertura -->
+  <section id="cobertura" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-16 relative z-20 w-full">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-tigo-blue/20">
+      <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50 via-cyan-50 to-amber-50 border border-blue-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-tigo-blue text-white flex items-center justify-center shrink-0 shadow-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-extrabold text-tigo-navy">Sistema Oficial de Factibilidad de Cobertura</h4>
+            <p class="text-xs text-slate-600">Comprueba directamente con el validador central de red de Tigo.</p>
+          </div>
+        </div>
+        <a 
+          href="https://script.google.com/macros/s/AKfycbz-1sH93YYBC9reMbxhbyQcCKb82cJzE2OqDIYEsAsg0m9V-NJvEyFy1ugPtNJDoxs/exec" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-tigo-navy hover:bg-tigo-blue text-white text-xs font-black px-5 py-3 rounded-xl transition shadow-md shrink-0 hover:scale-[1.02] active:scale-95"
+        >
+          <span>Abrir Validador Oficial</span>
+          <svg class="w-3.5 h-3.5 text-tigo-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+        <div>
+          <span class="inline-block text-xs font-black uppercase tracking-wider text-tigo-blue bg-blue-50 px-3 py-1 rounded-full">
+            Paso 1: Verificador Técnico Rápido
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-tigo-navy mt-1">
+            Verifica cobertura inmediata en tu barrio o ciudad
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Ingresa tu zona (ej: Bello Horizonte, Linda Vista, Altamira, Masaya, León, Estelí) para confirmar la red disponible.
+          </p>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-tigo-success bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl shrink-0">
+          <span class="w-2 h-2 rounded-full bg-tigo-success"></span>
+          Sistema activo en línea
+        </span>
+      </div>
+
+      <form id="form-cobertura" onsubmit="validarCobertura(event)" class="flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+          </div>
+          <input 
+            type="text" 
+            id="input-barrio" 
+            required 
+            placeholder="Escribe tu Barrio, Reparto o Ciudad..." 
+            class="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-tigo-blue focus:border-tigo-blue outline-none transition"
+          >
+        </div>
+        <button 
+          type="submit" 
+          class="bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold px-7 py-3.5 rounded-2xl text-sm transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 shrink-0">
+          <span>Verificar Viabilidad</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
-        <button onclick="switchTab('tab-tv')" id="btn-tv" class="tab-btn py-2.5 px-3 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 hover:text-brand-navy transition">
+      </form>
+
+      <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+        <span class="font-bold text-slate-600">Zonas frecuentes:</span>
+        <button type="button" onclick="probarZona('Bello Horizonte, Managua')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Bello Horizonte</button>
+        <button type="button" onclick="probarZona('Linda Vista, Managua')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Linda Vista</button>
+        <button type="button" onclick="probarZona('Villa Fontana, Managua')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Villa Fontana</button>
+        <button type="button" onclick="probarZona('Centro, León')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">León</button>
+        <button type="button" onclick="probarZona('Monimbó, Masaya')" class="bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg text-slate-700 transition">Masaya</button>
+      </div>
+
+      <div id="resultado-cobertura" class="hidden mt-5 p-5 rounded-2xl border transition-all duration-300"></div>
+    </div>
+  </section>
+
+  <!-- Comparativa Transparente de Planes -->
+  <section id="planes" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <span class="text-xs font-black uppercase tracking-widest text-tigo-blue bg-blue-100/70 px-3.5 py-1 rounded-full">
+        Comparativa Clara y Transparente
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-black text-tigo-navy mt-2">
+        Precios finales exactos. Cero sorpresas.
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base mt-2">
+        Velocidad garantizada de subida y bajada, canales en alta definición y precios completos con IVA incluido. Elige tu modalidad:
+      </p>
+
+      <!-- Selector de Pestañas -->
+      <div class="mt-8 inline-flex p-1.5 bg-slate-200/80 rounded-2xl gap-1 max-w-full overflow-x-auto shadow-inner">
+        <button onclick="cambiarCategoria('internet')" id="tab-btn-internet" class="tab-pill active px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap bg-tigo-blue text-white shadow">
+          Internet Solo
+        </button>
+        <button onclick="cambiarCategoria('internet-tv')" id="tab-btn-internet-tv" class="tab-pill px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap text-slate-700 hover:text-tigo-blue">
           Internet + TV
         </button>
-        <button onclick="switchTab('tab-hbo')" id="btn-hbo" class="tab-btn py-2.5 px-3 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 hover:text-brand-navy transition">
-          Internet + TV + HBO
+        <button onclick="cambiarCategoria('internet-tv-hbo')" id="tab-btn-internet-tv-hbo" class="tab-pill px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap text-slate-700 hover:text-tigo-blue">
+          Internet + TV + HBO Max
         </button>
-        <button onclick="switchTab('tab-full')" id="btn-full" class="tab-btn py-2.5 px-3 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 hover:text-brand-navy transition">
-          Full Hogar
+        <button onclick="cambiarCategoria('full-hogar')" id="tab-btn-full-hogar" class="tab-pill px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all whitespace-nowrap text-slate-700 hover:text-tigo-blue">
+          Full Hogar (Móvil Incluido)
         </button>
       </div>
     </div>
 
-    <!-- Pestaña 1: Internet Solo -->
-    <div id="tab-internet" class="tab-content grid md:grid-cols-3 gap-6">
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
+    <!-- PANEL 1: INTERNET SOLO -->
+    <div id="panel-internet" class="categoria-panel grid md:grid-cols-3 gap-6">
+      
+      <!-- 100 Mbps -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between">
         <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase tracking-wider">Plan Esencial</span>
-          <h3 class="text-3xl font-black text-brand-navy mt-1">100 Mbps</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 700 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-extrabold uppercase text-slate-400">Plan Internet</span>
+            <span class="text-[11px] font-bold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md">Básico Familiar</span>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 100 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Wi-Fi de alta cobertura incluido</li>
-          </ul>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">100 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 700</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
+          </div>
+
+          <div class="mt-4 space-y-2.5 text-sm text-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Hasta <strong>100 Mbps</strong> de velocidad</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Navegación 100% <strong>ilimitada</strong> sin topes</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Router Wi-Fi incluido en comodato</span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+              <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-black shadow-sm">HBO max</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Servicios Adicionales</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#0064FF] text-white text-[11px] font-bold shadow-sm">Paramount+</span>
+              <span class="px-2.5 py-1 rounded bg-[#0A1835] text-cyan-400 text-[11px] font-bold shadow-sm border border-cyan-800">Disney+</span>
+            </div>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Internet 100 Mbps - C$ 700/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Internet 100 Mbps', 'C$ 700 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('Internet 100 Mbps', 'C$ 700 /mes', 'Hasta 100 Mbps de velocidad con navegación ilimitada. Incluye router Wi-Fi de alta cobertura. Promociones: ViX Premium C$220 a partir de la 2da factura. HBO MAX C$295 a partir de la 5ta factura. Precios con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
-        <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase tracking-wider">Más Elegido</span>
-          <h3 class="text-3xl font-black text-brand-navy mt-1">200 Mbps</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 920 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 200 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Streaming simultáneo 4K</li>
-          </ul>
+      <!-- 200 Mbps (Recomendado) -->
+      <div class="bg-white rounded-3xl p-7 border-2 border-tigo-blue shadow-2xl relative flex flex-col justify-between transform md:-translate-y-2">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-tigo-yellow text-tigo-navy font-black text-xs uppercase px-4 py-1 rounded-full shadow-md tracking-wide">
+          Más Popular
         </div>
+        <div>
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-extrabold uppercase text-tigo-blue">Plan Internet</span>
+            <span class="text-[11px] font-bold bg-blue-100 text-tigo-blue px-2.5 py-0.5 rounded-md">Recomendado</span>
+          </div>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">200 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 920</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
+          </div>
+
+          <div class="mt-4 space-y-2.5 text-sm text-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Hasta <strong>200 Mbps</strong> de velocidad</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Navegación 100% <strong>ilimitada</strong></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Ideal para múltiples pantallas y Home Office</span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+              <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-black shadow-sm">HBO max</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Servicios Adicionales</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#0064FF] text-white text-[11px] font-bold shadow-sm">Paramount+</span>
+              <span class="px-2.5 py-1 rounded bg-[#0A1835] text-cyan-400 text-[11px] font-bold shadow-sm border border-cyan-800">Disney+</span>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Internet 200 Mbps - C$ 920/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Internet 200 Mbps', 'C$ 920 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-lg flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('Internet 200 Mbps', 'C$ 920 /mes', 'Excelente velocidad para streaming 4K, teletrabajo y juegos en línea. ViX Premium C$220 a partir de la 2da factura. HBO MAX C$295 a partir de la 5ta factura. Precios con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-xl border-2 border-brand-sky p-6 flex flex-col justify-between relative">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-sky text-brand-navy text-xs font-extrabold px-4 py-1 rounded-full uppercase tracking-wider">
-          Máximo Desempeño
-        </div>
+      <!-- 300 Mbps -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-lg hover:shadow-xl transition-all flex flex-col justify-between">
         <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase tracking-wider">Ultra Velocidad</span>
-          <h3 class="text-3xl font-black text-brand-navy mt-1">300 Mbps</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,100 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-extrabold uppercase text-slate-400">Plan Internet</span>
+            <span class="text-[11px] font-bold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md">Alta Velocidad</span>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 300 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Mínima latencia para gaming</li>
-          </ul>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">300 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 1,100</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
+          </div>
+
+          <div class="mt-4 space-y-2.5 text-sm text-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Hasta <strong>300 Mbps</strong> de velocidad</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Navegación ilimitada y latencia ultrabaja</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-100 text-tigo-blue flex items-center justify-center text-xs font-black">✓</span>
+              <span>Para creadores de contenido y gamers</span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+              <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-black shadow-sm">HBO max</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Servicios Adicionales</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#0064FF] text-white text-[11px] font-bold shadow-sm">Paramount+</span>
+              <span class="px-2.5 py-1 rounded bg-[#0A1835] text-cyan-400 text-[11px] font-bold shadow-sm border border-cyan-800">Disney+</span>
+            </div>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Internet 300 Mbps - C$ 1,100/mes')" class="w-full bg-brand-sky hover:bg-sky-400 text-brand-navy font-black py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Internet 300 Mbps', 'C$ 1,100 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('Internet 300 Mbps', 'C$ 1,100 /mes', 'Nivel profesional con 300 Mbps de transferencia constante. ViX Premium C$220 a partir de la 2da factura. HBO MAX C$295 a partir de la 5ta factura. Precios con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Pestaña 2: Internet + TV -->
-    <div id="tab-tv" class="tab-content hidden grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
+    <!-- PANEL 2: INTERNET + TV -->
+    <div id="panel-internet-tv" class="categoria-panel hidden grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      
+      <!-- 120 Mbps + TV -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-xl flex flex-col justify-between">
         <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase">Combo Familiar</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">120 Mbps + TV</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 955 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <span class="text-xs font-black uppercase text-tigo-blue bg-blue-50 px-3 py-1 rounded-full">Combo Hogar</span>
+          <h3 class="text-3xl font-black text-tigo-navy mt-2">120 Mbps + TV</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-black text-tigo-blue">C$ 955</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio final con IVA incluido</p>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 120 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> TV Digital HD completa</li>
-          </ul>
+
+          <div class="mt-5 space-y-3 text-sm text-slate-700">
+            <div class="flex items-center gap-2 font-medium">
+              <span class="text-tigo-blue font-bold">✓</span> Hasta <strong>120 Mbps</strong> de velocidad
+            </div>
+            <div class="flex items-center gap-2 font-medium">
+              <span class="text-tigo-blue font-bold">✓</span> Navegación ilimitada sin cortes
+            </div>
+            <div class="flex items-center gap-2 font-medium">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>TV Digital HD</strong> (canales en alta definición)
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+              <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-black shadow-sm">HBO max</span>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Servicios Adicionales</p>
+            <div class="flex gap-2">
+              <span class="px-2 py-1 rounded bg-[#0064FF] text-white text-[10px] font-bold">Paramount+</span>
+              <span class="px-2 py-1 rounded bg-[#FFC200] text-slate-900 text-[10px] font-bold">UNIVERSAL+</span>
+              <span class="px-2 py-1 rounded bg-[#0A1835] text-cyan-400 text-[10px] font-bold border border-cyan-800">Disney+</span>
+            </div>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Combo 120 Mbps + TV - C$ 955/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Combo 120 Mbps + TV', 'C$ 955 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('Combo 120 Mbps + TV', 'C$ 955 /mes', 'Combo con 120 Mbps y grilla de televisión digital con canales HD. ViX Premium C$220 a partir de la 2da factura. HBO MAX C$295 a partir de la 5ta factura. Precios con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-xl border-2 border-brand-sky p-6 flex flex-col justify-between relative">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-brand-dark text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-          Incluye Disney+
+      <!-- 300 Mbps + TV + Disney Estándar -->
+      <div class="bg-white rounded-3xl p-7 border-2 border-tigo-blue shadow-2xl flex flex-col justify-between relative">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-tigo-yellow text-tigo-navy font-black text-xs uppercase px-4 py-1 rounded-full shadow-md">
+          Con Disney+ Incluido
         </div>
         <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase">Combo Premium</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">300 Mbps + TV + Disney+</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,280 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <span class="text-xs font-black uppercase text-tigo-blue bg-blue-50 px-3 py-1 rounded-full">Combo Premium</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-tigo-navy mt-2">300 Mbps + TV + Disney Estándar</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-black text-tigo-blue">C$ 1,280</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio final con IVA incluido</p>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 300 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> TV Digital HD</li>
-            <li class="flex items-center gap-2 text-brand-navy font-bold"><span class="text-emerald-500 font-bold">✓</span> Disney+ Plan Estándar Incluido</li>
-          </ul>
+
+          <div class="mt-5 space-y-3 text-sm text-slate-700">
+            <div class="flex items-center gap-2 font-semibold text-slate-800">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>Internet:</strong> Hasta 300 Mbps de velocidad
+            </div>
+            <div class="flex items-center gap-2 font-medium">
+              <span class="text-tigo-blue font-bold">✓</span> Navegación ilimitada garantizada
+            </div>
+            <div class="flex items-center gap-2 font-medium">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>TV Digital HD</strong> completa
+            </div>
+            <div class="flex items-center gap-2 font-bold text-tigo-navy bg-cyan-50 p-2 rounded-xl border border-cyan-100">
+              <span class="text-cyan-600 font-bold">★</span> <strong>Disney+ Plan Estándar Incluido</strong>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+              <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-black shadow-sm">HBO max</span>
+            </div>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Combo 300 Mbps + TV + Disney - C$ 1,280/mes')" class="w-full bg-brand-sky hover:bg-sky-400 text-brand-navy font-black py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Combo 300 Mbps + TV + Disney Estándar', 'C$ 1,280 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-lg flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('Combo 300 Mbps + TV + Disney Estándar', 'C$ 1,280 /mes', '300 Mbps, TV HD y suscripción a Disney+ Plan Estándar ya incluida sin coste extra mensual. ViX Premium C$220 a partir de la 2da factura. HBO MAX C$295 a partir de la 5ta factura. Vigencia Disney+ Estándar sujeta a contrato. IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Pestaña 3: Internet + TV + HBO max -->
-    <div id="tab-hbo" class="tab-content hidden grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
+    <!-- PANEL 3: INTERNET + TV + HBO MAX -->
+    <div id="panel-internet-tv-hbo" class="categoria-panel hidden grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      
+      <!-- 200 Mbps + TV + HBO max -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-xl flex flex-col justify-between">
         <div>
-          <span class="text-xs font-extrabold text-brand-sky uppercase">Combo Cine</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">200 Mbps + TV + HBO</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,100 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <span class="text-xs font-black uppercase text-tigo-blue bg-blue-50 px-3 py-1 rounded-full">Combo Cinéfilo</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-tigo-navy mt-2">200 Mbps + TV + HBO max</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-black text-tigo-blue">C$ 1,100</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 200 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Navegación ilimitada</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> TV Digital HD</li>
-            <li class="flex items-center gap-2 font-bold text-purple-700"><span class="text-emerald-500 font-bold">✓</span> HBO Max Incluido</li>
-          </ul>
+
+          <div class="mt-5 space-y-3 text-sm text-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>Internet:</strong> Hasta 200 Mbps de velocidad
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> Navegación ilimitada continua
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>TV Digital HD</strong>
+            </div>
+            <div class="flex items-center gap-2 font-bold text-slate-900 bg-slate-100 p-2 rounded-xl">
+              <span class="text-purple-600 font-bold">★</span> <strong>HBO Max Incluido</strong>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Combo 200 Mbps + TV + HBO Max - C$ 1,100/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Combo 200 Mbps + TV + HBO max', 'C$ 1,100 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('200 Mbps + TV + HBO max', 'C$ 1,100 /mes', 'Acceso ilimitado a HBO Max, TV en alta definición y 200 Mbps de alta velocidad. ViX Premium C$220 a partir de la 2da factura. Vigencia HBO MAX sujeta a contrato. IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-xl border-2 border-purple-500 p-6 flex flex-col justify-between">
+      <!-- 300 Mbps + TV + HBO max -->
+      <div class="bg-white rounded-3xl p-7 border-2 border-tigo-blue shadow-2xl flex flex-col justify-between">
         <div>
-          <span class="text-xs font-extrabold text-purple-600 uppercase">Máxima Calidad</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">300 Mbps + TV + HBO</h3>
-          <div class="my-4">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,170 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio Incluye IVA</p>
+          <span class="text-xs font-black uppercase text-tigo-blue bg-blue-50 px-3 py-1 rounded-full">Velocidad Pro</span>
+          <h3 class="text-2xl sm:text-3xl font-black text-tigo-navy mt-2">300 Mbps + TV + HBO max</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-4xl font-black text-tigo-blue">C$ 1,170</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio exacto con IVA incluido</p>
           </div>
-          <ul class="text-sm space-y-2.5 text-slate-600 border-t border-slate-100 pt-4">
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> Hasta 300 Mbps de velocidad</li>
-            <li class="flex items-center gap-2"><span class="text-brand-navy font-bold">✓</span> TV Digital HD</li>
-            <li class="flex items-center gap-2 font-bold text-purple-700"><span class="text-emerald-500 font-bold">✓</span> HBO Max Incluido</li>
-          </ul>
+
+          <div class="mt-5 space-y-3 text-sm text-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>Internet:</strong> Hasta 300 Mbps de velocidad
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> Navegación ilimitada sin restricciones
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-tigo-blue font-bold">✓</span> <strong>TV Digital HD</strong>
+            </div>
+            <div class="flex items-center gap-2 font-bold text-slate-900 bg-slate-100 p-2 rounded-xl">
+              <span class="text-purple-600 font-bold">★</span> <strong>HBO Max Incluido</strong>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <span class="px-2.5 py-1 rounded bg-[#FF4B00] text-white text-[11px] font-black shadow-sm">ViX</span>
+          </div>
         </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100">
-          <button onclick="selectPlan('Combo 300 Mbps + TV + HBO Max - C$ 1,170/mes')" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 rounded-full transition shadow">
+          <button onclick="seleccionarPaquete('Combo 300 Mbps + TV + HBO max', 'C$ 1,170 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3.5 rounded-full transition shadow-lg flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
             LO QUIERO
+          </button>
+          <button onclick="mostrarModalInfo('300 Mbps + TV + HBO max', 'C$ 1,170 /mes', 'Plan de alta potencia con 300 Mbps, grilla HD y HBO Max. ViX Premium C$220 a partir de la 2da factura. Vigencia HBO MAX sujeta a contrato. IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Ver detalle completo &gt;
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Pestaña 4: Full Hogar -->
-    <div id="tab-full" class="tab-content hidden grid md:grid-cols-3 gap-6">
-      <!-- Full Hogar 200M -->
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
+    <!-- PANEL 4: FULL HOGAR -->
+    <div id="panel-full-hogar" class="categoria-panel hidden grid md:grid-cols-3 gap-6">
+      
+      <!-- Full Hogar 200 Mbps -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-xl flex flex-col justify-between">
         <div>
-          <span class="inline-block bg-brand-navy text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded">TV + Móvil</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-2">Full Hogar 200M</h3>
-          <div class="my-3">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,210 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio final IVA incluido</p>
+          <span class="inline-block bg-tigo-blue text-white text-[11px] font-black px-3 py-1 rounded-md mb-2">TV + Móvil</span>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">FULL HOGAR</p>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">200 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 1,210</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio incluye IVA</p>
           </div>
-          <ul class="text-xs sm:text-sm space-y-2 text-slate-600 border-t border-slate-100 pt-3">
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> Hasta 200 Mbps</li>
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> TV 175 canales (41 HD)</li>
-            <li class="flex items-center gap-1.5 font-bold text-emerald-600"><span class="text-emerald-600 font-bold">✓</span> Móvil: 15GB Internet FULL</li>
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> Apps sin consumir tus GBs</li>
-          </ul>
 
           <a href="https://wa.me/50589881501?text=Hola%2C%20quiero%20solicitar%20el%20plan%20Tigo%20Full%20Hogar%20200%20Mbps%20(C$1%2C210/mes)" target="_blank" rel="noopener noreferrer" class="mt-4 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-emerald-600 text-white font-black text-xs py-2.5 px-4 rounded-full transition shadow-sm">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Solicitar Por WhatsApp
           </a>
+
+          <div class="mt-5 space-y-2 text-xs sm:text-sm text-slate-700">
+            <p>✓ <strong>Internet:</strong> Hasta 200 Mbps</p>
+            <p>✓ <strong>TV:</strong> 175 canales (84 SD + 41 HD + 50 Música)</p>
+            <p>✓ <strong>Móvil:</strong> 15GB Internet FULL</p>
+            <p>✓ <strong>Apps</strong> sin consumir tus GBs</p>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-slate-100">
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2 py-1 rounded bg-[#FF4B00] text-white text-[10px] font-black">ViX</span>
+              <span class="px-2 py-1 rounded bg-black text-white text-[10px] font-black">HBO max</span>
+            </div>
+          </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100">
-          <button onclick="selectPlan('Full Hogar 200 Mbps - C$ 1,210/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-2.5 rounded-full transition shadow text-xs uppercase tracking-wide">
-            Activar por Formulario
+
+        <div class="mt-6 pt-4 border-t border-slate-100">
+          <button onclick="seleccionarPaquete('Full Hogar 200 Mbps', 'C$ 1,210 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3 rounded-full transition shadow-md">
+            Activar Ahora
+          </button>
+          <button onclick="mostrarModalInfo('Full Hogar 200 Mbps', 'C$ 1,210 /mes', '200 Mbps de alta velocidad + 175 canales con 41 en HD + línea móvil 15GB FULL con Apps libres. Precio exacto con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Detalle &gt;
           </button>
         </div>
       </div>
 
-      <!-- Full Hogar 300M HBO -->
-      <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition">
+      <!-- Full Hogar 300 Mbps + HBO Max -->
+      <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-xl flex flex-col justify-between">
         <div>
-          <span class="inline-block bg-slate-200 text-slate-800 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded">TV + Móvil + HBO Max</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-2">Full Hogar 300M HBO</h3>
-          <div class="my-3">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,280 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio final IVA incluido</p>
+          <span class="inline-block bg-slate-200 text-slate-800 text-[11px] font-black px-3 py-1 rounded-md mb-2">TV + Móvil + HBO Max</span>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">FULL HOGAR</p>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">300 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 1,280</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio incluye IVA</p>
           </div>
-          <ul class="text-xs sm:text-sm space-y-2 text-slate-600 border-t border-slate-100 pt-3">
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> Hasta 300 Mbps</li>
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> TV 174 canales (41 HD)</li>
-            <li class="flex items-center gap-1.5 font-bold text-emerald-600"><span class="text-emerald-600 font-bold">✓</span> Móvil: 15GB Internet FULL</li>
-            <li class="flex items-center gap-1.5 font-bold text-purple-700"><span class="text-purple-700 font-bold">✓</span> HBO Max Incluido</li>
-          </ul>
 
           <a href="https://wa.me/50589881501?text=Hola%2C%20quiero%20solicitar%20el%20plan%20Tigo%20Full%20Hogar%20300%20Mbps%20con%20HBO%20Max%20(C$1%2C280/mes)" target="_blank" rel="noopener noreferrer" class="mt-4 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-emerald-600 text-white font-black text-xs py-2.5 px-4 rounded-full transition shadow-sm">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Solicitar Por WhatsApp
           </a>
+
+          <div class="mt-5 space-y-2 text-xs sm:text-sm text-slate-700">
+            <p>✓ <strong>Internet:</strong> Hasta 300 Mbps</p>
+            <p>✓ <strong>TV:</strong> 174 canales (83 SD + 41 HD + 50 Música)</p>
+            <p>✓ <strong>Móvil:</strong> 15GB Internet FULL</p>
+            <p>✓ <strong>Apps</strong> sin consumir tus GBs</p>
+            <p class="font-bold text-tigo-navy">✓ <strong>HBO Max Incluido</strong></p>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-slate-100">
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <span class="px-2 py-1 rounded bg-[#FF4B00] text-white text-[10px] font-black">ViX</span>
+          </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100">
-          <button onclick="selectPlan('Full Hogar 300 Mbps HBO - C$ 1,280/mes')" class="w-full bg-brand-navy hover:bg-blue-900 text-white font-bold py-2.5 rounded-full transition shadow text-xs uppercase tracking-wide">
-            Activar por Formulario
+
+        <div class="mt-6 pt-4 border-t border-slate-100">
+          <button onclick="seleccionarPaquete('Full Hogar 300 Mbps + HBO Max', 'C$ 1,280 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3 rounded-full transition shadow-md">
+            Activar Ahora
+          </button>
+          <button onclick="mostrarModalInfo('Full Hogar 300 Mbps + HBO Max', 'C$ 1,280 /mes', 'Internet de 300 Mbps + 174 canales con 41 HD + móvil 15GB FULL + suscripción a HBO Max integrada en tu cuenta. Precios con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Detalle &gt;
           </button>
         </div>
       </div>
 
-      <!-- Full Hogar 300M Disney -->
-      <div class="bg-white rounded-2xl shadow-xl border-2 border-brand-sky p-6 flex flex-col justify-between relative">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase">
-          Top Recomendado
+      <!-- Full Hogar 300 Mbps + Disney+ -->
+      <div class="bg-white rounded-3xl p-7 border-2 border-tigo-cyan shadow-xl flex flex-col justify-between relative">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-tigo-cyan text-slate-900 font-black text-xs uppercase px-4 py-1 rounded-full shadow-md">
+          Disney+ Incluido
         </div>
         <div>
-          <span class="inline-block bg-sky-100 text-brand-navy text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded">TV + Móvil + Disney+</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-2">Full Hogar 300M Disney</h3>
-          <div class="my-3">
-            <div class="text-3xl font-black text-brand-navy">C$ 1,390 <span class="text-xs font-normal text-slate-500">/mes</span></div>
-            <p class="text-xs text-emerald-600 font-bold">Precio final IVA incluido</p>
+          <span class="inline-block bg-[#00D1FF] text-slate-950 text-[11px] font-black px-3 py-1 rounded-md mb-2">TV + Móvil + Disney+</span>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">FULL HOGAR</p>
+          <h3 class="text-3xl font-black text-tigo-navy mt-1">300 Mbps</h3>
+          
+          <div class="mt-4 pb-4 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl sm:text-4xl font-black text-tigo-blue">C$ 1,390</span>
+              <span class="text-sm font-bold text-slate-500">/mes</span>
+            </div>
+            <p class="text-xs font-semibold text-tigo-success mt-0.5">✓ Precio incluye IVA</p>
           </div>
-          <ul class="text-xs sm:text-sm space-y-2 text-slate-600 border-t border-slate-100 pt-3">
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> Hasta 300 Mbps</li>
-            <li class="flex items-center gap-1.5"><span class="text-brand-navy font-bold">✓</span> TV 174 canales (41 HD)</li>
-            <li class="flex items-center gap-1.5 font-bold text-emerald-600"><span class="text-emerald-600 font-bold">✓</span> Móvil: 15GB Internet FULL</li>
-            <li class="flex items-center gap-1.5 font-bold text-brand-blue"><span class="text-brand-blue font-bold">✓</span> Disney+ Plan Estándar</li>
-          </ul>
 
           <a href="https://wa.me/50589881501?text=Hola%2C%20quiero%20solicitar%20el%20plan%20Tigo%20Full%20Hogar%20300%20Mbps%20con%20Disney%2B%20(C$1%2C390/mes)" target="_blank" rel="noopener noreferrer" class="mt-4 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-emerald-600 text-white font-black text-xs py-2.5 px-4 rounded-full transition shadow-sm">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Solicitar Por WhatsApp
           </a>
+
+          <div class="mt-5 space-y-2 text-xs sm:text-sm text-slate-700">
+            <p>✓ <strong>Internet:</strong> Hasta 300 Mbps</p>
+            <p>✓ <strong>TV:</strong> 174 canales (83 SD + 41 HD + 50 Música)</p>
+            <p>✓ <strong>Móvil:</strong> 15GB Internet FULL</p>
+            <p>✓ <strong>Apps</strong> sin consumir tus GBs</p>
+            <p class="font-bold text-tigo-navy">✓ <strong>Disney+ Plan Estándar incluido</strong></p>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-slate-100">
+            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Promoción Adicional</p>
+            <div class="flex gap-2">
+              <span class="px-2 py-1 rounded bg-[#FF4B00] text-white text-[10px] font-black">ViX</span>
+              <span class="px-2 py-1 rounded bg-black text-white text-[10px] font-black">HBO max</span>
+            </div>
+          </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100">
-          <button onclick="selectPlan('Full Hogar 300 Mbps Disney - C$ 1,390/mes')" class="w-full bg-brand-sky hover:bg-sky-400 text-brand-navy font-black py-2.5 rounded-full transition shadow text-xs uppercase tracking-wide">
-            Activar por Formulario
+
+        <div class="mt-6 pt-4 border-t border-slate-100">
+          <button onclick="seleccionarPaquete('Full Hogar 300 Mbps + Disney+', 'C$ 1,390 /mes')" class="w-full bg-tigo-blue hover:bg-tigo-bright text-white font-extrabold py-3 rounded-full transition shadow-md">
+            Activar Ahora
+          </button>
+          <button onclick="mostrarModalInfo('Full Hogar 300 Mbps + Disney+', 'C$ 1,390 /mes', 'Combo integral con 300 Mbps, TV HD completa, Disney+ estándar y línea móvil con 15GB. Precio final con IVA incluido.')" class="w-full text-center text-xs text-tigo-blue font-bold mt-2.5 hover:underline">
+            Detalle &gt;
           </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. Beneficios Exclusivos del Plan Celular Incluido -->
-  <section id="celular-gratis" class="max-w-5xl mx-auto px-4 sm:px-6 mb-20 scroll-mt-24">
-    <div class="bg-gradient-to-br from-brand-navy via-slate-900 to-brand-blue rounded-3xl p-8 sm:p-12 text-white shadow-2xl border-2 border-amber-400/50 relative overflow-hidden">
-      <div class="max-w-3xl relative z-10">
-        <span class="inline-block bg-amber-400 text-brand-dark text-xs font-extrabold uppercase px-3 py-1 rounded-full mb-4 shadow">
-          BENEFICIO EXCLUSIVO FULL HOGAR
+  <!-- Incentivos: Streaming Incluido -->
+  <section id="incentivos" class="bg-white py-16 border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-black uppercase tracking-widest text-tigo-blue bg-blue-50 px-3.5 py-1 rounded-full">
+          Incentivos Exclusivos
         </span>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-          ¡Obtén tu Plan Celular <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-sky-300 to-white">Incluido</span>!
+        <h2 class="text-3xl sm:text-4xl font-black text-tigo-navy mt-2">
+          Las mejores plataformas de streaming incluidas
         </h2>
-        <p class="mt-3 text-slate-200 text-sm sm:text-base leading-relaxed">
-          Al contratar tu solución de conectividad para el hogar, recibes una línea móvil con beneficios garantizados cada mes sin pagar nada adicional.
+        <p class="text-slate-600 text-sm mt-2">
+          Ahorra dinero unificando tus servicios favoritos en tu misma cuenta Tigo Hogar con acceso multidispositivo simultáneo.
         </p>
-
-        <div class="mt-8 grid sm:grid-cols-2 gap-4">
-          <div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/10 flex items-start gap-3">
-            <span class="text-amber-400 font-black text-lg">1.</span>
-            <div>
-              <h4 class="font-bold text-sm sm:text-base text-white">Llamadas ilimitadas Tigo</h4>
-              <p class="text-xs text-slate-300">Habla todo lo que quieras con cualquier línea Tigo.</p>
-            </div>
-          </div>
-
-          <div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/10 flex items-start gap-3">
-            <span class="text-amber-400 font-black text-lg">2.</span>
-            <div>
-              <h4 class="font-bold text-sm sm:text-base text-white">50 minutos multidestino</h4>
-              <p class="text-xs text-slate-300">Minutos para llamar a otras operadoras locales.</p>
-            </div>
-          </div>
-
-          <div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/10 flex items-start gap-3">
-            <span class="text-amber-400 font-black text-lg">3.</span>
-            <div>
-              <h4 class="font-bold text-sm sm:text-base text-white">Internet 15GB</h4>
-              <p class="text-xs text-slate-300">Navega a alta velocidad donde vayas con máxima cobertura.</p>
-            </div>
-          </div>
-
-          <div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/10 flex items-start gap-3">
-            <span class="text-amber-400 font-black text-lg">4.</span>
-            <div>
-              <h4 class="font-bold text-sm sm:text-base text-amber-300">SMS ilimitados a todas las operadoras</h4>
-              <p class="text-xs text-slate-300 font-bold uppercase tracking-wider text-emerald-400">GRATIS PERPETUO CADA MES</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center gap-4">
-          <button onclick="selectPlan('Full Hogar 300 Mbps (Bundle Celular Gratis)')" 
-                  class="w-full sm:w-auto bg-amber-400 hover:bg-amber-300 text-brand-dark font-black text-base px-8 py-3.5 rounded-full shadow-lg transition transform hover:-translate-y-0.5">
-            ¡LO QUIERO!
-          </button>
-          <span class="text-xs text-slate-300 text-center sm:text-left">
-            Aplica de forma automática vinculando tu paquete Full Hogar.
-          </span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Verificador interactivo de cobertura -->
-  <section id="cobertura" class="max-w-5xl mx-auto px-4 sm:px-6 mb-20">
-    <div class="bg-gradient-to-r from-brand-navy to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-      <div class="max-w-2xl relative z-10">
-        <span class="text-brand-sky text-xs font-extrabold uppercase tracking-wider">Validación Inmediata</span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold mt-1">Verifica tu cobertura en segundos</h2>
-        <p class="mt-2 text-slate-300 text-sm sm:text-base">
-          Ingresa tu barrio, colonia o zona residencial para comprobar viabilidad técnica directa.
-        </p>
-
-        <form id="coverage-form" onsubmit="checkCoverage(event)" class="mt-6 flex flex-col sm:flex-row gap-3">
-          <input type="text" id="coverage-input" required
-                 placeholder="Ej. Bello Horizonte, Villa Fontana, Altamira..." 
-                 class="w-full px-5 py-3.5 rounded-full text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-sky font-medium text-sm">
-          <button type="submit" class="bg-brand-sky hover:bg-sky-400 text-brand-navy font-black px-7 py-3.5 rounded-full transition shadow-md whitespace-nowrap">
-            Comprobar Viabilidad
-          </button>
-        </form>
-
-        <div id="coverage-result" class="mt-4 hidden p-4 rounded-xl text-sm transition-all duration-300"></div>
-
-        <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
-          <span>O abre directamente la herramienta oficial en la nube:</span>
-          <a href="https://script.google.com/macros/s/AKfycbz-1sH93YYBC9reMbxhbyQcCKb82cJzE2OqDIYEsAsg0m9V-NJvEyFy1ugPtNJDoxs/exec" 
-             target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-1.5 text-amber-300 hover:text-amber-200 font-bold underline">
-            Sistema Oficial de Factibilidad de Cobertura ↗
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Incentivos: Streaming incluido -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 mb-20">
-    <div class="text-center max-w-2xl mx-auto mb-10">
-      <span class="text-xs font-bold text-brand-blue uppercase tracking-wider">Beneficios Incluidos</span>
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-navy mt-1">Plataformas de streaming incluidas</h2>
-      <p class="text-slate-600 text-sm mt-2">Disfruta de tus producciones y series favoritas integradas en tu misma cuenta mensual.</p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center">
-        <div class="w-14 h-14 rounded-2xl bg-blue-900 text-white font-black flex items-center justify-center text-lg mb-3 shadow">
-          D+
-        </div>
-        <h4 class="font-bold text-slate-800 text-base">Disney+ Estándar</h4>
-        <p class="text-xs text-slate-500 mt-1">Incluido en planes seleccionados para toda la familia sin costo adicional.</p>
       </div>
 
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center">
-        <div class="w-14 h-14 rounded-2xl bg-purple-900 text-white font-black flex items-center justify-center text-lg mb-3 shadow">
-          HBO
-        </div>
-        <h4 class="font-bold text-slate-800 text-base">HBO Max</h4>
-        <p class="text-xs text-slate-500 mt-1">Películas de estreno, producciones originales y series completas.</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center">
-        <div class="w-14 h-14 rounded-2xl bg-orange-600 text-white font-black flex items-center justify-center text-lg mb-3 shadow">
-          ViX
-        </div>
-        <h4 class="font-bold text-slate-800 text-base">ViX Premium</h4>
-        <p class="text-xs text-slate-500 mt-1">Promoción adicional activable desde el momento de contratación.</p>
-      </div>
-
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center flex flex-col items-center">
-        <div class="w-14 h-14 rounded-2xl bg-slate-800 text-amber-400 font-black flex items-center justify-center text-lg mb-3 shadow">
-          +HD
-        </div>
-        <h4 class="font-bold text-slate-800 text-base">Hasta 41 Canales HD</h4>
-        <p class="text-xs text-slate-500 mt-1">Audio envolvente, resolución de alta fidelidad y guía digital interactiva.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Formulario de captura ultracorto y Prueba Social -->
-  <section id="contacto" class="max-w-6xl mx-auto px-4 sm:px-6 mb-20">
-    <div class="grid lg:grid-cols-12 gap-10 items-start">
-      
-      <!-- Formulario ultracorto -->
-      <div class="lg:col-span-6 bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8">
-        <div class="mb-6">
-          <span class="text-xs font-bold text-brand-sky uppercase tracking-wider">Sin complicaciones</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">Solicita tu instalación</h3>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">
-            Solo déjanos tus 3 datos y un asesor te contactará para coordinar la visita técnica en menos de 72 horas.
-          </p>
-        </div>
-
-        <form id="lead-form" onsubmit="submitLead(event)" class="space-y-4">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Disney+ -->
+        <div class="bg-gradient-to-b from-[#0A1835] to-[#040C1E] text-white p-6 rounded-3xl shadow-xl flex flex-col justify-between border border-cyan-900">
           <div>
-            <label for="nombre" class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre y Apellido</label>
-            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Marlon Altamirano" 
-                   class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-sky font-medium text-sm">
-          </div>
-
-          <div>
-            <label for="telefono" class="block text-xs font-bold text-slate-700 uppercase mb-1">Número de Teléfono / WhatsApp</label>
-            <input type="tel" id="telefono" name="telefono" required placeholder="Ej. 8888-0000" 
-                   class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-sky font-medium text-sm">
-          </div>
-
-          <div>
-            <label for="ubicacion" class="block text-xs font-bold text-slate-700 uppercase mb-1">Ubicación o Barrio</label>
-            <input type="text" id="ubicacion" name="ubicacion" required placeholder="Ej. Managua, Linda Vista Norte" 
-                   class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-sky font-medium text-sm">
-          </div>
-
-          <div>
-            <label for="plan-seleccionado" class="block text-xs font-bold text-slate-700 uppercase mb-1">Paquete de interés</label>
-            <select id="plan-seleccionado" name="plan" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-sky font-medium text-sm">
-              <option value="Internet 100 Mbps - C$ 700/mes">Internet 100 Mbps - C$ 700/mes</option>
-              <option value="Internet 200 Mbps - C$ 920/mes">Internet 200 Mbps - C$ 920/mes</option>
-              <option value="Internet 300 Mbps - C$ 1,100/mes">Internet 300 Mbps - C$ 1,100/mes</option>
-              <option value="Combo 120 Mbps + TV - C$ 955/mes">Combo 120 Mbps + TV - C$ 955/mes</option>
-              <option value="Combo 300 Mbps + TV + Disney - C$ 1,280/mes">Combo 300 Mbps + TV + Disney - C$ 1,280/mes</option>
-              <option value="Combo 200 Mbps + TV + HBO Max - C$ 1,100/mes">Combo 200 Mbps + TV + HBO Max - C$ 1,100/mes</option>
-              <option value="Combo 300 Mbps + TV + HBO Max - C$ 1,170/mes">Combo 300 Mbps + TV + HBO Max - C$ 1,170/mes</option>
-              <option value="Full Hogar 200 Mbps - C$ 1,210/mes">Full Hogar 200 Mbps - C$ 1,210/mes</option>
-              <option value="Full Hogar 300 Mbps HBO - C$ 1,280/mes">Full Hogar 300 Mbps HBO - C$ 1,280/mes</option>
-              <option value="Full Hogar 300 Mbps Disney - C$ 1,390/mes">Full Hogar 300 Mbps Disney - C$ 1,390/mes</option>
-              <option value="Full Hogar 300 Mbps (Bundle Celular Gratis)">Full Hogar 300 Mbps (Bundle Celular Gratis)</option>
-            </select>
-          </div>
-
-          <button type="submit" id="submit-btn" class="w-full bg-amber-400 hover:bg-amber-300 text-brand-dark font-black py-4 rounded-xl shadow-lg transition text-base tracking-wide flex items-center justify-center gap-2">
-            <span>SOLICITAR INFORMACIÓN RÁPIDA</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- Prueba social y garantías -->
-      <div class="lg:col-span-6 space-y-6">
-        <div>
-          <span class="text-xs font-bold text-brand-blue uppercase tracking-wider">Opiniones Verificadas</span>
-          <h3 class="text-2xl font-black text-brand-navy mt-1">Respaldado por quienes ya navegan a tope</h3>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-full bg-blue-100 text-brand-navy font-bold flex items-center justify-center text-sm">
-              EA
+            <div class="h-10 flex items-center">
+              <span class="text-xl font-black tracking-tight text-white">Disney<span class="text-cyan-400 font-extrabold">+</span></span>
             </div>
-            <div>
-              <h4 class="font-bold text-sm text-slate-800">Eduardo A.</h4>
-              <p class="text-xs text-slate-400">Residencial Las Colinas</p>
-            </div>
-            <div class="ml-auto text-amber-400 text-xs">★★★★★</div>
-          </div>
-          <p class="text-slate-600 text-sm">
-            "Solicité el paquete de 200 Mbps y vinieron a instalarlo en menos de 48 horas. Trabajo de forma remota y las reuniones no se cortan ni en horas pico nocturnas."
-          </p>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-full bg-sky-100 text-brand-sky font-bold flex items-center justify-center text-sm">
-              MG
-            </div>
-            <div>
-              <h4 class="font-bold text-sm text-slate-800">Mariana G.</h4>
-              <p class="text-xs text-slate-400">Reparto San Juan</p>
-            </div>
-            <div class="ml-auto text-amber-400 text-xs">★★★★★</div>
-          </div>
-          <p class="text-slate-600 text-sm">
-            "El combo con televisión y Disney+ valió totalmente la pena. La calidad HD se nota nítida y la velocidad de descarga siempre se mantiene estable."
-          </p>
-        </div>
-
-        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-xl shrink-0">
-            🛡️
-          </div>
-          <div>
-            <h4 class="font-bold text-sm text-slate-800">Garantía de Calidad Técnica</h4>
-            <p class="text-xs text-slate-500">
-              Instalación profesional certificada, soporte local y equipo de alta gama configurado sin cargos sorpresa.
+            <h4 class="font-extrabold text-base mt-3 text-cyan-200">Plan Estándar Incluido</h4>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Películas, series originales, estrenos de Disney, Pixar, Marvel, Star Wars y deportes en vivo de ESPN.
             </p>
           </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-tigo-yellow font-bold">En planes seleccionados</span>
+            <span class="text-slate-300">HD / Full HD</span>
+          </div>
         </div>
+
+        <!-- HBO Max -->
+        <div class="bg-gradient-to-b from-purple-950 to-slate-950 text-white p-6 rounded-3xl shadow-xl flex flex-col justify-between border border-purple-900">
+          <div>
+            <div class="h-10 flex items-center">
+              <span class="text-xl font-black tracking-tight text-white">HBO <span class="text-purple-400">max</span></span>
+            </div>
+            <h4 class="font-extrabold text-base mt-3 text-purple-200">Todo el catálogo de Warner</h4>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Disfruta de éxitos de taquilla, series galardonadas de HBO, documentales y Champions League en vivo.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-tigo-yellow font-bold">Incluido o con descuento</span>
+            <span class="text-slate-300">Multidispositivo</span>
+          </div>
+        </div>
+
+        <!-- ViX Premium -->
+        <div class="bg-gradient-to-b from-[#251000] to-slate-950 text-white p-6 rounded-3xl shadow-xl flex flex-col justify-between border border-orange-950">
+          <div>
+            <div class="h-10 flex items-center">
+              <span class="text-xl font-black tracking-tight text-[#FF4B00]">ViX <span class="text-xs font-extrabold text-white bg-[#FF4B00] px-1.5 py-0.5 rounded">PREMIUM</span></span>
+            </div>
+            <h4 class="font-extrabold text-base mt-3 text-orange-200">Fútbol y Entretenimiento Latino</h4>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Partidos de ligas exclusivas, novelas completas y series en español sin interrupciones publicitarias.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-tigo-yellow font-bold">Meses de promoción</span>
+            <span class="text-slate-300">100% en Español</span>
+          </div>
+        </div>
+
+        <!-- Paramount+ / Universal+ -->
+        <div class="bg-gradient-to-b from-blue-950 to-slate-950 text-white p-6 rounded-3xl shadow-xl flex flex-col justify-between border border-blue-900">
+          <div>
+            <div class="h-10 flex items-center gap-2">
+              <span class="text-sm font-black text-blue-400">Paramount+</span>
+              <span class="text-xs text-slate-400">&amp;</span>
+              <span class="text-xs font-bold bg-[#FFC200] text-slate-900 px-1.5 py-0.5 rounded">Universal+</span>
+            </div>
+            <h4 class="font-extrabold text-base mt-3 text-blue-200">Adicionales a tu medida</h4>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Agrega fácilmente canales premium de cine, franquicias icónicas y contenido infantil a tu suscripción con 1 solo clic.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-tigo-yellow font-bold">Fácil activación</span>
+            <span class="text-slate-300">Sin contratos extra</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Pie de página -->
-  <footer class="bg-brand-navy text-slate-300 py-12 px-6 border-t border-brand-blue/30 text-sm">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="flex items-center gap-2">
-        <div class="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full border border-white/20">
-          <svg class="w-5 h-5 text-brand-sky" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.5c3.74 0 7.15 1.49 9.68 3.91L12 19.34 2.32 11.41C4.85 8.99 8.26 7.5 12 7.5z"/>
-          </svg>
-          <span class="font-extrabold text-sm tracking-wider text-amber-300">5G</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+  <!-- Sección de Beneficios: Plan Celular Incluido -->
+  <section id="celular-gratis" class="py-16 bg-gradient-to-b from-slate-900 via-tigo-navy to-slate-900 text-white relative overflow-hidden border-b border-white/10 scroll-mt-24">
+    <div class="absolute -top-24 left-1/4 w-96 h-96 bg-tigo-cyan/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 right-1/4 w-96 h-96 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 bg-tigo-yellow/20 border border-tigo-yellow text-tigo-yellow text-xs font-black uppercase px-4 py-1.5 rounded-full tracking-wider mb-4 shadow-glow-yellow">
+          <span class="w-2.5 h-2.5 rounded-full bg-tigo-yellow animate-ping"></span>
+          Beneficio Exclusivo Full Hogar
         </div>
-        <span class="font-bold text-base text-white">UltraConectividad</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+          ¡Obtén tu Plan Celular <span class="text-transparent bg-clip-text bg-gradient-to-r from-tigo-yellow via-amber-300 to-tigo-cyan">Incluido</span>!
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+          Al contratar tu servicio residencial con el paquete <strong>Full Hogar 300 Mbps</strong>, recibes una línea móvil pospago con beneficios activos sin costo adicional en tu factura.
+        </p>
       </div>
 
-      <div class="text-center md:text-right text-xs text-slate-400 space-y-1">
-        <p>Precios finales en Córdobas (C$) con IVA incluido.</p>
-        <p>Disponibilidad y tiempos de visita técnica sujetos a factibilidad por zona geográfica.</p>
+      <!-- Beneficios Destacados -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Beneficio 1 -->
+        <div class="bg-white/5 border border-white/15 rounded-3xl p-6 backdrop-blur-sm hover:border-tigo-yellow/60 transition-all group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-tigo-yellow text-tigo-navy flex items-center justify-center font-black text-xl mb-4 group-hover:scale-110 transition-transform shadow-glow-yellow">
+              📞
+            </div>
+            <span class="text-xs font-black uppercase tracking-wider text-tigo-yellow">Beneficio 1</span>
+            <h3 class="text-lg font-black text-white mt-1">Llamadas Ilimitadas Tigo</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Habla sin límites de tiempo a cualquier número móvil o fijo de la red Tigo en todo el país.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] font-bold text-tigo-cyan">
+            ✓ Cobertura nacional 100%
+          </div>
+        </div>
+
+        <!-- Beneficio 2 -->
+        <div class="bg-white/5 border border-white/15 rounded-3xl p-6 backdrop-blur-sm hover:border-tigo-cyan/60 transition-all group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-tigo-cyan text-tigo-navy flex items-center justify-center font-black text-xl mb-4 group-hover:scale-110 transition-transform">
+              ⏱️
+            </div>
+            <span class="text-xs font-black uppercase tracking-wider text-tigo-cyan">Beneficio 2</span>
+            <h3 class="text-lg font-black text-white mt-1">50 Minutos Multidestino</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Minutos incluidos para llamar a otras operadoras locales sin recargar saldo adicional.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] font-bold text-tigo-cyan">
+            ✓ Renovación mensual
+          </div>
+        </div>
+
+        <!-- Beneficio 3 -->
+        <div class="bg-white/5 border border-white/15 rounded-3xl p-6 backdrop-blur-sm hover:border-tigo-yellow/60 transition-all group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-tigo-bright to-blue-400 text-white flex items-center justify-center font-black text-xl mb-4 group-hover:scale-110 transition-transform">
+              🚀
+            </div>
+            <span class="text-xs font-black uppercase tracking-wider text-tigo-yellow">Beneficio 3</span>
+            <h3 class="text-lg font-black text-white mt-1">Internet 15GB</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              15GB de navegación FULL de alta velocidad para streaming, redes, videos y descargas en cualquier lugar.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] font-bold text-tigo-cyan">
+            ✓ Red 4.5G LTE Tigo
+          </div>
+        </div>
+
+        <!-- Beneficio 4 -->
+        <div class="bg-gradient-to-br from-amber-500/20 to-tigo-yellow/10 border-2 border-tigo-yellow/80 rounded-3xl p-6 backdrop-blur-sm group flex flex-col justify-between shadow-glow-yellow">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-tigo-yellow text-tigo-navy flex items-center justify-center font-black text-xl mb-4 group-hover:scale-110 transition-transform">
+              ✉️
+            </div>
+            <span class="text-xs font-black uppercase tracking-wider text-tigo-yellow">Beneficio 4</span>
+            <h3 class="text-lg font-black text-white mt-1">SMS Ilimitados a Todas las Operadoras</h3>
+            <p class="text-xs text-amber-200 mt-2 font-bold leading-relaxed">
+              GRATIS PERPETUO CADA MES.
+            </p>
+            <p class="text-[11px] text-slate-300 mt-1">
+              Envía mensajes de texto sin costo a cualquier compañía móvil del país, mes a mes para siempre.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] font-black text-tigo-yellow">
+            ★ SIN COSTO ADICIONAL NUNCA
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Banner de Paquete Bundle Recomendado -->
+      <div class="mt-12 bg-white/10 border-2 border-tigo-yellow rounded-3xl p-6 sm:p-8 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <span class="text-xs font-black uppercase tracking-wider text-tigo-yellow bg-tigo-yellow/20 px-3 py-1 rounded-full">
+            Paquete Recomendado para esta promoción
+          </span>
+          <h3 class="text-2xl sm:text-3xl font-black text-white mt-2">
+            Plan Full Hogar 300 Mbps (Internet + TV HD + Línea Móvil Incluida)
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm mt-1 max-w-xl">
+            Llévate 300 Mbps de velocidad, 174 canales con 41 en HD y tu plan celular con los 4 beneficios activos por solo <strong>C$ 1,280 /mes</strong> (IVA incluido).
+          </p>
+        </div>
+
+        <button 
+          onclick="seleccionarPaqueteYIrAFormulario('Full Hogar 300 Mbps (Bundle Celular Gratis - C$ 1,280/mes)', 'C$ 1,280 /mes')" 
+          class="bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy font-black text-base px-8 py-4 rounded-full shadow-glow-yellow transition-all duration-200 hover:scale-105 active:scale-95 shrink-0 flex items-center gap-2">
+          <span>LO QUIERO</span>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Formulario de Captura Ultracorto -->
+  <section id="contacto" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full scroll-mt-20">
+    <div class="bg-gradient-to-br from-tigo-navy via-[#002758] to-tigo-dark rounded-3xl p-8 sm:p-12 text-white shadow-2xl border-2 border-tigo-yellow/30 relative overflow-hidden">
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-tigo-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-2xl mx-auto text-center mb-8">
+        <span class="inline-block bg-tigo-yellow text-tigo-navy text-xs font-black uppercase px-3.5 py-1 rounded-full mb-3 tracking-wider">
+          Respuesta en menos de 15 minutos
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white">
+          Solicita tu instalación rápida
+        </h2>
+        <p class="text-slate-300 text-sm mt-2">
+          Solo necesitamos tus datos indispensables para que un asesor valide la cobertura y disponibilidad en tu zona.
+        </p>
+      </div>
+
+      <form id="lead-form-ultracorto" onsubmit="enviarLeadCorto(event)" class="relative z-10 max-w-xl mx-auto space-y-4">
+        
+        <div>
+          <label for="lead-nombre" class="block text-xs font-extrabold uppercase tracking-wider text-slate-200 mb-1.5">
+            1. Nombre y Apellido
+          </label>
+          <input 
+            type="text" 
+            id="lead-nombre" 
+            name="nombre"
+            required
+            placeholder="Ej: Roberto Mendoza"
+            class="w-full px-4 py-3.5 rounded-2xl bg-white text-slate-800 placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-tigo-yellow border border-transparent transition"
+          >
+        </div>
+
+        <div>
+          <label for="lead-telefono" class="block text-xs font-extrabold uppercase tracking-wider text-slate-200 mb-1.5">
+            2. Número de Teléfono (WhatsApp o Celular)
+          </label>
+          <input 
+            type="tel" 
+            id="lead-telefono" 
+            name="telefono"
+            required
+            placeholder="Ej: 8888 1234 o +505 8888 1234"
+            class="w-full px-4 py-3.5 rounded-2xl bg-white text-slate-800 placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-tigo-yellow border border-transparent transition"
+          >
+        </div>
+
+        <div>
+          <label for="lead-ubicacion" class="block text-xs font-extrabold uppercase tracking-wider text-slate-200 mb-1.5">
+            3. Ubicación o Barrio
+          </label>
+          <input 
+            type="text" 
+            id="lead-ubicacion" 
+            name="ubicacion"
+            required
+            placeholder="Ej: Reparto San Juan, Managua o Villa Fontana"
+            class="w-full px-4 py-3.5 rounded-2xl bg-white text-slate-800 placeholder-slate-400 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-tigo-yellow border border-transparent transition"
+          >
+        </div>
+
+        <div>
+          <label for="lead-plan-seleccionado" class="block text-xs font-extrabold uppercase tracking-wider text-slate-200 mb-1.5">
+            Paquete de interés
+          </label>
+          <select 
+            id="lead-plan-seleccionado" 
+            name="plan"
+            class="w-full px-4 py-3.5 rounded-2xl bg-white text-slate-800 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-tigo-yellow border border-transparent transition">
+            <option value="Full Hogar 300 Mbps (Bundle Celular Gratis - C$ 1,280/mes)">Full Hogar 300 Mbps (Bundle Celular Gratis - C$ 1,280/mes) ⭐</option>
+            <option value="Internet 200 Mbps (C$ 920/mes)">Internet 200 Mbps - C$ 920/mes (Más Popular)</option>
+            <option value="Internet 100 Mbps (C$ 700/mes)">Internet 100 Mbps - C$ 700/mes</option>
+            <option value="Internet 300 Mbps (C$ 1,100/mes)">Internet 300 Mbps - C$ 1,100/mes</option>
+            <option value="Combo 120 Mbps + TV (C$ 955/mes)">Combo 120 Mbps + TV - C$ 955/mes</option>
+            <option value="Combo 300 Mbps + TV + Disney Estándar (C$ 1,280/mes)">Combo 300 Mbps + TV + Disney Estándar - C$ 1,280/mes</option>
+            <option value="Combo 200 Mbps + TV + HBO max (C$ 1,100/mes)">Combo 200 Mbps + TV + HBO max - C$ 1,100/mes</option>
+            <option value="Combo 300 Mbps + TV + HBO max (C$ 1,170/mes)">Combo 300 Mbps + TV + HBO max - C$ 1,170/mes</option>
+            <option value="Full Hogar 200 Mbps (C$ 1,210/mes)">Full Hogar 200 Mbps - C$ 1,210/mes</option>
+            <option value="Full Hogar 300 Mbps + HBO Max (C$ 1,280/mes)">Full Hogar 300 Mbps + HBO Max - C$ 1,280/mes</option>
+            <option value="Full Hogar 300 Mbps + Disney+ (C$ 1,390/mes)">Full Hogar 300 Mbps + Disney+ - C$ 1,390/mes</option>
+          </select>
+        </div>
+
+        <div class="pt-3">
+          <button 
+            type="submit" 
+            id="btn-submit-lead"
+            class="w-full bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy font-black py-4 rounded-2xl text-base shadow-glow-yellow transition-all duration-200 transform hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-2">
+            <span id="btn-submit-text">¡Pásate a Tigo Hoy! Llamarme Gratis</span>
+            <svg id="btn-submit-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+        </div>
+
+        <p class="text-center text-[11px] text-slate-300 pt-2">
+          🔒 Tus datos están protegidos. Sin spam. Solo te llamaremos para coordinar la factibilidad y fecha de instalación.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Prueba Social & Respaldo -->
+  <section id="opiniones" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-xs font-black uppercase tracking-widest text-tigo-blue bg-blue-50 px-3.5 py-1 rounded-full">
+        Prueba Social &amp; Respaldo
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-black text-tigo-navy mt-2">
+        La confianza de quienes ya se cambiaron
+      </h2>
+      <p class="text-slate-600 text-sm mt-2">
+        Historias reales de clientes que necesitaban estabilidad constante durante horas pico y una instalación sin demoras.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Reseña 1 -->
+      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 flex flex-col justify-between hover:shadow-lg transition">
+        <div>
+          <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">
+            ★★★★★
+          </div>
+          <p class="text-slate-700 text-sm italic leading-relaxed">
+            "En mi anterior compañía el internet se caía todos los días a las 7:00 PM. Con el internet de Tigo trabajo en videollamadas mientras mis hijos ven Netflix en 4K y la señal no baja ni un solo mega."
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-100 text-tigo-blue font-bold flex items-center justify-center text-sm">
+            MR
+          </div>
+          <div>
+            <h5 class="text-sm font-extrabold text-tigo-navy">Mauricio Rivas</h5>
+            <p class="text-xs text-slate-500">Bello Horizonte, Managua • Plan 200 Mbps</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reseña 2 -->
+      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 flex flex-col justify-between hover:shadow-lg transition">
+        <div>
+          <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">
+            ★★★★★
+          </div>
+          <p class="text-slate-700 text-sm italic leading-relaxed">
+            "Llené el formulario un martes por la tarde y el miércoles al mediodía ya estaban los técnicos instalando los equipos y configurando los canales HD. Instalación súper limpia y rápida."
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-sm">
+            SP
+          </div>
+          <div>
+            <h5 class="text-sm font-extrabold text-tigo-navy">Sofía Pavón</h5>
+            <p class="text-xs text-slate-500">Linda Vista, Managua • Combo 120 Mbps + TV</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reseña 3 -->
+      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 flex flex-col justify-between hover:shadow-lg transition">
+        <div>
+          <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">
+            ★★★★★
+          </div>
+          <p class="text-slate-700 text-sm italic leading-relaxed">
+            "Tener Disney+ y HBO Max ya metidos en la mensualidad sin cobros sorpresa es una maravilla. El precio en C$ que anuncian es exactamente lo que viene reflejado en la factura."
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-800 font-bold flex items-center justify-center text-sm">
+            EC
+          </div>
+          <div>
+            <h5 class="text-sm font-extrabold text-tigo-navy">Eduardo Castillo</h5>
+            <p class="text-xs text-slate-500">León • Full Hogar 300 Mbps</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Garantías de Calidad -->
+    <div class="mt-12 bg-white rounded-3xl p-8 border-2 border-slate-200 grid sm:grid-cols-3 gap-6 text-center">
+      <div class="p-4">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-50 text-tigo-blue flex items-center justify-center text-xl mb-3 font-bold">
+          ⚡
+        </div>
+        <h4 class="font-black text-tigo-navy text-base">Cero Caídas en Horas Pico</h4>
+        <p class="text-xs text-slate-500 mt-1">
+          Arquitectura de red dedicada con enrutamiento de baja latencia internacional garantizado.
+        </p>
+      </div>
+
+      <div class="p-4 border-y sm:border-y-0 sm:border-x border-slate-100">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-3 font-bold">
+          ⏱️
+        </div>
+        <h4 class="font-black text-tigo-navy text-base">Instalación Prioritaria</h4>
+        <p class="text-xs text-slate-500 mt-1">
+          Coordinación técnica garantizada en &lt; 72 hrs con pruebas de velocidad en vivo antes de retirarse.
+        </p>
+      </div>
+
+      <div class="p-4">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-xl mb-3 font-bold">
+          📋
+        </div>
+        <h4 class="font-black text-tigo-navy text-base">Precios Finales Sin Letras Pequeñas</h4>
+        <p class="text-xs text-slate-500 mt-1">
+          Todas las tarifas reflejadas incluyen el impuesto de valor agregado (IVA) de ley.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pie de Página -->
+  <footer class="bg-tigo-navy text-slate-400 py-12 px-4 sm:px-6 lg:px-8 text-sm mt-auto border-t border-white/10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <div class="bg-gradient-to-r from-tigo-yellow via-amber-400 to-tigo-cyan p-[2px] rounded-xl shadow-sm">
+          <div class="bg-tigo-navy px-2.5 py-1 rounded-[10px] flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-tigo-yellow" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+              <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+              <line x1="12" y1="20" x2="12.01" y2="20"></line>
+            </svg>
+            <span class="h-3 w-[1px] bg-white/20"></span>
+            <span class="text-xs font-black tracking-tight text-white">5G</span>
+          </div>
+        </div>
+        <span class="text-white font-bold">Conectividad Residencial y Corporativa</span>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6 text-xs text-slate-300 font-medium">
+        <a href="#cobertura" class="hover:text-tigo-yellow transition">Cobertura</a>
+        <a href="#planes" class="hover:text-tigo-yellow transition">Planes Internet</a>
+        <a href="#incentivos" class="hover:text-tigo-yellow transition">Streaming</a>
+        <a href="#contacto" class="hover:text-tigo-yellow transition">Solicitar llamada</a>
       </div>
     </div>
   </footer>
 
-  <!-- Notificación Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-brand-navy text-white px-5 py-3 rounded-2xl shadow-2xl border border-brand-sky flex items-center gap-3">
-    <span id="toast-icon">✅</span>
-    <span id="toast-msg" class="text-xs sm:text-sm font-semibold">Mensaje</span>
+  <!-- Modal Interactivo de Información -->
+  <div id="modal-detalle" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="cerrarModalInfo()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100">
+        ✕
+      </button>
+      <span class="text-xs font-black text-tigo-blue uppercase tracking-widest">Detalle de Contratación</span>
+      <h3 id="modal-titulo" class="text-2xl font-black text-tigo-navy mt-1"></h3>
+      <p id="modal-precio" class="text-xl font-black text-tigo-blue mt-0.5"></p>
+      
+      <div class="mt-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 text-sm text-slate-700 leading-relaxed" id="modal-descripcion">
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <button onclick="cerrarModalInfo(); document.getElementById('contacto').scrollIntoView({behavior:'smooth'});" class="flex-1 bg-tigo-yellow hover:bg-tigo-yellowHover text-tigo-navy font-black py-3 rounded-full text-sm transition shadow-md text-center">
+          Solicitar este paquete
+        </button>
+        <button onclick="cerrarModalInfo()" class="px-5 py-3 rounded-full border border-slate-300 text-slate-700 text-sm font-bold hover:bg-slate-50 transition">
+          Volver a planes
+        </button>
+      </div>
+    </div>
   </div>
 
+  <!-- Toast Wrapper -->
+  <div id="toast-wrapper" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
   <script>
-    // URL activa de tu Web App en Google Apps Script
     const GOOGLE_SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzHtnPAZl5dk6Wzh0jfPcVAw8yxgb9M1S050676_W0TzBzgwY_i6LVXeiTl15knclEA/exec";
 
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.add('hidden');
-      });
-      document.getElementById(tabId).classList.remove('hidden');
-
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-sky-100', 'text-brand-navy', 'font-bold');
-        btn.classList.add('text-slate-600', 'font-semibold');
+    function cambiarCategoria(catKey) {
+      document.querySelectorAll('.categoria-panel').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-pill').forEach(btn => {
+        btn.classList.remove('bg-tigo-blue', 'text-white', 'shadow');
+        btn.classList.add('text-slate-700');
       });
 
-      const activeBtnId = tabId.replace('tab-', 'btn-');
-      const activeBtn = document.getElementById(activeBtnId);
-      if (activeBtn) {
-        activeBtn.classList.remove('text-slate-600', 'font-semibold');
-        activeBtn.classList.add('bg-sky-100', 'text-brand-navy', 'font-bold');
+      const panel = document.getElementById(`panel-${catKey}`);
+      if (panel) panel.classList.remove('hidden');
+
+      const btn = document.getElementById(`tab-btn-${catKey}`);
+      if (btn) {
+        btn.classList.add('bg-tigo-blue', 'text-white', 'shadow');
+        btn.classList.remove('text-slate-700');
       }
     }
 
-    function selectPlan(planName) {
-      const select = document.getElementById('plan-seleccionado');
+    function mostrarModalInfo(titulo, precio, desc) {
+      document.getElementById('modal-titulo').textContent = titulo;
+      document.getElementById('modal-precio').textContent = precio;
+      document.getElementById('modal-descripcion').textContent = desc;
+      document.getElementById('modal-detalle').classList.remove('hidden');
+    }
+
+    function cerrarModalInfo() {
+      document.getElementById('modal-detalle').classList.add('hidden');
+    }
+
+    function seleccionarPaqueteYIrAFormulario(nombre, precio) {
+      const select = document.getElementById('lead-plan-seleccionado');
       if (select) {
-        select.value = planName;
+        let matched = false;
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes('Full Hogar 300') || select.options[i].value.includes('300')) {
+            select.selectedIndex = i;
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) {
+          const opt = new Option(`${nombre} (${precio})`, `${nombre} (${precio})`, true, true);
+          select.add(opt);
+        }
       }
-      
-      const formSection = document.getElementById('contacto');
-      formSection.scrollIntoView({ behavior: 'smooth' });
+
+      const contactoSection = document.getElementById('contacto');
+      if (contactoSection) {
+        contactoSection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const inputNombre = document.getElementById('lead-nombre');
+          if (inputNombre) inputNombre.focus();
+        }, 500);
+      }
+
+      mostrarToast(`¡Plan seleccionado: Full Hogar 300 Mbps con Celular Incluido!`, 'success');
+    }
+
+    function seleccionarPaquete(nombre, precio) {
+      const select = document.getElementById('lead-plan-seleccionado');
+      if (select) {
+        let matched = false;
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.toLowerCase().includes(nombre.toLowerCase())) {
+            select.selectedIndex = i;
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) {
+          const opt = new Option(`${nombre} (${precio})`, `${nombre} (${precio})`, true, true);
+          select.add(opt);
+        }
+      }
+
+      const contactoSection = document.getElementById('contacto');
+      if (contactoSection) {
+        contactoSection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const inputNombre = document.getElementById('lead-nombre');
+          if (inputNombre) inputNombre.focus();
+        }, 500);
+      }
+
+      mostrarToast(`Seleccionaste ${nombre}. Completa tus datos para confirmar cobertura.`, 'info');
+    }
+
+    function probarZona(zona) {
+      const input = document.getElementById('input-barrio');
+      input.value = zona;
+      validarCobertura(new Event('submit'));
+    }
+
+    function validarCobertura(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('input-barrio');
+      const box = document.getElementById('resultado-cobertura');
+      const barrio = input.value.trim();
+
+      if (!barrio) return;
+
+      box.className = 'mt-5 p-5 rounded-2xl border bg-blue-50/80 border-blue-200 flex items-center gap-3 text-tigo-navy';
+      box.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-tigo-blue shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span class="text-sm font-semibold">Consultando disponibilidad de red para <strong>"${escapeHtml(barrio)}"</strong>...</span>
+      `;
+      box.classList.remove('hidden');
 
       setTimeout(() => {
-        const nombreInput = document.getElementById('nombre');
-        if (nombreInput) nombreInput.focus();
-      }, 600);
-
-      showToast(`Seleccionaste: ${planName}`);
-    }
-
-    function checkCoverage(e) {
-      e.preventDefault();
-      const input = document.getElementById('coverage-input').value.trim();
-      const result = document.getElementById('coverage-result');
-      
-      if (!input) return;
-
-      result.classList.remove('hidden', 'bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/30');
-      result.className = "mt-4 p-4 rounded-xl text-sm border bg-emerald-500/20 text-emerald-300 border-emerald-500/40 block";
-      result.innerHTML = `
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div>
-            <span class="font-bold">✓ ¡Excelente noticia!</span> Tenemos cobertura de red confirmada para <strong>${escapeHtml(input)}</strong>.
+        box.className = 'mt-5 p-5 rounded-2xl border bg-emerald-50 border-emerald-300 text-slate-800';
+        box.innerHTML = `
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🟢</span>
+              <div>
+                <h4 class="font-extrabold text-emerald-800 text-base">¡Excelente! Cobertura disponible en "${escapeHtml(barrio)}"</h4>
+                <p class="text-xs text-slate-600 mt-0.5">
+                  Velocidades desde 100 Mbps hasta 300 Mbps con puertos libres para instalación prioritaria &lt; 72 hrs.
+                </p>
+                <div class="mt-2 flex flex-wrap items-center gap-3">
+                  <a href="https://script.google.com/macros/s/AKfycbz-1sH93YYBC9reMbxhbyQcCKb82cJzE2OqDIYEsAsg0m9V-NJvEyFy1ugPtNJDoxs/exec" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-tigo-blue hover:underline">
+                    <span>Validar coordenadas en el validador oficial</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <button onclick="transferirZonaYContactar('${escapeHtml(barrio)}')" class="bg-tigo-blue hover:bg-tigo-bright text-white text-xs font-black px-5 py-2.5 rounded-full transition shadow shrink-0">
+              Solicitar con esta dirección
+            </button>
           </div>
-          <a href="#contacto" onclick="prefillLocation('${escapeHtml(input)}')" class="bg-emerald-400 hover:bg-emerald-300 text-brand-dark px-4 py-1.5 rounded-full font-bold text-xs uppercase shadow whitespace-nowrap">
-            Aprovechar Cobertura
-          </a>
-        </div>
-      `;
+        `;
+        
+        const ubicacionLead = document.getElementById('lead-ubicacion');
+        if (ubicacionLead) ubicacionLead.value = barrio;
+
+        mostrarToast(`¡Cobertura técnica confirmada en ${barrio}!`, 'success');
+      }, 800);
     }
 
-    function prefillLocation(loc) {
-      const ub = document.getElementById('ubicacion');
-      if (ub) {
-        ub.value = loc;
-        setTimeout(() => document.getElementById('nombre').focus(), 400);
-      }
+    function transferirZonaYContactar(zona) {
+      const ubicacionLead = document.getElementById('lead-ubicacion');
+      if (ubicacionLead) ubicacionLead.value = zona;
+      
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        const nombreInput = document.getElementById('lead-nombre');
+        if (nombreInput) nombreInput.focus();
+      }, 500);
     }
 
-    // ENVÍO INFALIBLE: POST a través de formulario invisible hacia target iframe
-    function submitLead(e) {
+    // ENVÍO DE FORMULARIO A GOOGLE SHEETS A TRAVÉS DE POST DIRECTO AL IFRAME OCULTO
+    function enviarLeadCorto(e) {
       e.preventDefault();
 
-      const submitBtn = document.getElementById('submit-btn');
-      const nombre = document.getElementById('nombre').value.trim();
-      const telefono = document.getElementById('telefono').value.trim();
-      const ubicacion = document.getElementById('ubicacion').value.trim();
-      const plan = document.getElementById('plan-seleccionado').value;
+      const btnSubmit = document.getElementById('btn-submit-lead');
+      const btnText = document.getElementById('btn-submit-text');
+      const nombre = document.getElementById('lead-nombre').value.trim();
+      const telefono = document.getElementById('lead-telefono').value.trim();
+      const ubicacion = document.getElementById('lead-ubicacion').value.trim();
+      const plan = document.getElementById('lead-plan-seleccionado').value;
 
-      submitBtn.disabled = true;
-      submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-      submitBtn.innerHTML = `<span>Registrando solicitud...</span>`;
+      btnSubmit.disabled = true;
+      btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+      btnText.textContent = "Registrando solicitud...";
 
-      // Crear formulario invisible temporal
+      // Enviar mediante formulario temporal al iframe para garantizar cero problemas de CORS
       const tempForm = document.createElement('form');
       tempForm.method = 'POST';
       tempForm.action = GOOGLE_SHEETS_WEBAPP_URL;
@@ -823,32 +1516,47 @@
       tempForm.submit();
       document.body.removeChild(tempForm);
 
-      // Feedback inmediato y restablecimiento
       setTimeout(() => {
-        showToast("¡Solicitud registrada de inmediato!");
-        document.getElementById('lead-form').reset();
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-        submitBtn.innerHTML = `<span>SOLICITAR INFORMACIÓN RÁPIDA</span>`;
+        mostrarToast(`¡Gracias ${nombre}! Tus datos se registraron correctamente. Te llamaremos en breve.`, 'success');
+        document.getElementById('lead-form-ultracorto').reset();
+        btnSubmit.disabled = false;
+        btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
+        btnText.textContent = "¡Pásate a Tigo Hoy! Llamarme Gratis";
       }, 700);
     }
 
-    function showToast(message, icon = "✅") {
-      const toast = document.getElementById('toast');
-      const msg = document.getElementById('toast-msg');
-      const ic = document.getElementById('toast-icon');
+    function mostrarToast(mensaje, tipo = 'info') {
+      const container = document.getElementById('toast-wrapper');
+      const toast = document.createElement('div');
       
-      msg.textContent = message;
-      ic.textContent = icon;
-      toast.classList.remove('translate-y-24', 'opacity-0');
+      const config = {
+        success: 'bg-emerald-700 text-white border-emerald-500',
+        info: 'bg-tigo-navy text-white border-tigo-bright/40',
+        warning: 'bg-amber-600 text-white border-amber-400'
+      };
+
+      toast.className = `${config[tipo] || config.info} border pointer-events-auto px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-medium transition-all duration-300 transform translate-y-3 opacity-0`;
       
+      const icon = tipo === 'success' ? '✓' : 'ℹ';
+      toast.innerHTML = `
+        <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs shrink-0">${icon}</span>
+        <span>${escapeHtml(mensaje)}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-3', 'opacity-0');
+      });
+
       setTimeout(() => {
-        toast.classList.add('translate-y-24', 'opacity-0');
-      }, 4000);
+        toast.classList.add('opacity-0', 'translate-y-1');
+        setTimeout(() => toast.remove(), 300);
+      }, 4500);
     }
 
     function escapeHtml(str) {
-      return str.replace(/[&<>'"]/g, tag => ({
+      return String(str).replace(/[&<>'"]/g, tag => ({
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
